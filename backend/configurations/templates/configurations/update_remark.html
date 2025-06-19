@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Remark</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        label {
+            font-weight: bold;
+        }
+        textarea, input {
+            font-size: 16px;
+        }
+        button {
+            padding: 6px 14px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update Remark</h1>
+    <form id="updateForm">
+        <label for="configId">Config ID:</label>
+        <input type="text" id="configId" required><br><br>
+
+        <label for="remark">Remark:</label><br>
+        <textarea id="remark" rows="5" cols="40" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="status"></div>
+
+    <script>
+        document.getElementById("updateForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const id = document.getElementById("configId").value.trim();
+            const remark = document.getElementById("remark").value;
+
+            fetch(`/api/configurations/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ remark: remark })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Request failed");
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById("status").textContent = "✅ " + (data.message || "Remark updated successfully.");
+                document.getElementById("status").style.color = "green";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("status").textContent = "❌ Error occurred while updating.";
+                document.getElementById("status").style.color = "red";
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Update Remark</title>
+</head>
+<body style="margin: 40px;">
+    <h1>Update Remark</h1>
+    <form onsubmit="event.preventDefault(); updateRemark();">
+        <label><strong>Config ID:</strong></label>
+        <input type="text" id="configId" required><br><br>
+        <label><strong>Remark:</strong></label><br>
+        <textarea id="remark" rows="5" cols="40" required></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="status" style="margin-top: 20px;"></div>
+
+    <script>
+        function updateRemark() {
+            const id = document.getElementById("configId").value;
+            const remark = document.getElementById("remark").value;
+            fetch(`/api/configurations/${id}`, {
+                method: "PUT",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({remark})
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("status").textContent = data.message || "Failed";
+            }).catch(() => {
+                document.getElementById("status").textContent = "Error occurred";
+            });
+        }
+    </script>
+</body>
+</html> -->
