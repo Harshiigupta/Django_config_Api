@@ -1,4 +1,4 @@
-# Full-Stack Software Developer Assignment – CodeRower Software Pvt. Ltd.
+# Full-Stack Software Developer Project
 
 This project is submitted as part of the Full-Stack Software Developer Trainee assignment from **CodeRower Software Pvt. Ltd.** It demonstrates the use of a Python Django backend with HTML/CSS frontend to perform RESTful operations with a MongoDB or SQLite database.
 
